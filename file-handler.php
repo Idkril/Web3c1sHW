@@ -1,8 +1,8 @@
 <?php
 
 // Перезапишем переменные для удобства
-$filePath  = $_FILES['upload']['tmp_name'];
-$errorCode = $_FILES['upload']['error'];
+$filePath  = $_FILES['file']['tmp_name'];
+$errorCode = $_FILES['file']['error'];
 
 // Проверим на ошибки
 if ($errorCode !== UPLOAD_ERR_OK || !is_uploaded_file($filePath)) {
@@ -48,11 +48,11 @@ $extension = image_type_to_extension($image[2]);
 // Сократим .jpeg до .jpg
 $format = str_replace('jpeg', 'jpg', $extension);
 
-if (!move_uploaded_file($filePath, __DIR__ . '/img_userphoto/' . $_POST['user_upld_id'] . $format)) {
+if (!move_uploaded_file($filePath, __DIR__ . '/img_userphoto/' . $_POST['user_upd_id'] . $format)) {
     die('При записи изображения на диск произошла ошибка.');
 }
 include('DB_conn.php');
 //sqli
-$res=mysqli_query($conn,'UPDATE users SET Photo="'.$format.'" WHERE id='.$_POST['user_upld_id']);
-header('Location: index.php');
+$res=mysqli_query($conn,'UPDATE users SET Photo="'.$format.'" WHERE id='.$_POST['user_upd_id']);
+//header('Location: index.php');
 ?>﻿

@@ -12,13 +12,11 @@
      $_SESSION['login']=$_POST['login'];
      $row=mysqli_fetch_array($res);
      $_SESSION['role']=$row['Role'];
-     header('Location: index.php');
+     echo 'Welcome, '.$_POST['login'];
    }
    else {
      echo mysqli_error($conn);
-     echo 'Wrong login/password. Redirecting...';
-     echo '<meta http-equiv="refresh" content="2;url=index.php">';
-     //header('Location: index.php',true,303);
+     echo 'Wrong login/password.';
    }
  }
 ?>

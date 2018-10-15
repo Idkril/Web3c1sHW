@@ -1,11 +1,6 @@
 <html>
 <link href="css/style.css" rel="stylesheet">
-<style>
-   .colortext {
-    background-color: #ffe; /* Цвет фона */
-    color: #930; /* Цвет текста */
-   }
-</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <?php
  session_start();
 
@@ -22,18 +17,18 @@
    $row=mysqli_fetch_array($res);
    if ( $_SESSION['role']==2 ) {
      //all editable by admin
-     echo '<form method="POST" action="update_profile_as_admin.php">
+     echo '<form>
      Login: <br>
-     <input type="text" name="login" value="'.$row['login'].'" class="colortext"><br>
+     <input type="text" value="'.$row['login'].'" class="colortext"><br>
      New Password: <br>
-     <input type="password" name="pwd" class="colortext"><br>
+     <input type="password" class="colortext"><br>
      First Name: <br>
-     <input type="text" name="FirstName" value="'.$row['FirstName'].'" class="colortext"><br>
+     <input type="text" value="'.$row['FirstName'].'" class="colortext"><br>
      Last Name: <br>
-     <input type="text" name="LastName" value="'.$row['LastName'].'" class="colortext"><br>
+     <input type="text" value="'.$row['LastName'].'" class="colortext"><br>
      Role: <br>
 
-     <select size="1" name="role">
+     <select id="roleslct" size="1" name="role">
      <option ';
      if ($row['Role']==1) {
        echo 'selected';
@@ -46,37 +41,78 @@
      echo ' value="2">Admin</option>
      </select><br>
 
-     <input type="hidden" name="someid" value="'.$row['id'].'">
-     <input type="submit">
-     </form>';
+     <div id="updsend"><input type="button" value="Отправить"></div>
+     </form>
+
+     <script>
+     updsend.onclick = function(e) {
+       $.post("http://localhost/update_profile_as_admin.php",{
+         login: document.getElementsByTagName("input")[0].value,
+         pwd: document.getElementsByTagName("input")[1].value,
+         FirstName: document.getElementsByTagName("input")[2].value,
+         LastName: document.getElementsByTagName("input")[3].value,
+         role: document.getElementById("roleslct").options[document.getElementById("roleslct").selectedIndex].value,
+         someid: '.$row['id'].'
+       } , onAjaxSuccess);
+
+       function onAjaxSuccess(data) {
+        window.location.href="http://localhost/index.php";
+       }
+     }
+     </script>';
 
      echo '</div>';
      /*--------------- IMG -----------*/
      echo '<div class="prof_imgupload">';
      if ($row['Photo']=="0") {
-       echo '<img class="img_userphoto" src="img_userphoto/0.png">';
+       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/0.png">';
      } else {
-       echo '<img class="img_userphoto" src="img_userphoto/'.$row['id'].$row['Photo'].'">';
+       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/'.$row['id'].$row['Photo'].'?'.time().'">';
      }
-     echo '<br><br><form action="file-handler.php" method="post" enctype="multipart/form-data">
-        <input type="file" name="upload" accept="image/*">
-        <input type="hidden" name="user_upld_id" value="'.$row['id'].'"><br><br>
-        <input type="submit">
-      </form>';
-     echo '</div>';
+     echo '<br><br>
+        <input id="sortpicture" type="file" name="sortpic" accept="image/*" />
+        <button id="upload">Загрузить</button>';
+     echo '</div>
+
+     <script>
+     $("#upload").on("click", function() {
+    var file_data = $("#sortpicture").prop("files")[0];
+    var form_data = new FormData();
+    form_data.append("file", file_data);
+    form_data.append("user_upd_id","'.$row['id'].'");
+    $.ajax({
+                url: "file-handler.php",
+                dataType: "text",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: "post",
+                success: function(php_script_response){
+                    document.getElementById("img_ava").src="img_userphoto/'.$row['id'].$row['Photo'].'?"+new Date().getTime();
+                    function updimgrt() {
+                      document.getElementById("img_ava").src="img_userphoto/'.$row['id'].$row['Photo'].'?"+new Date().getTime();
+
+                    }
+                    setTimeout(updimgrt,5000);
+                }
+     });
+});
+
+     </script>';
      /*------------- ENDIMG -----------*/
    }
    elseif ($_SESSION['login']==$row['login']) {
      //editable
-     echo '<form method="POST" action="update_profile_as_user.php">
+     echo '<form>
      Login: <br>
      <input type="text" value="'.$row['login'].'" readonly><br>
      New Password: <br>
-     <input type="password" name="pwd" class="colortext"><br>
+     <input type="password" class="colortext"><br>
      First Name: <br>
-     <input type="text" name="FirstName" value="'.$row['FirstName'].'" class="colortext"><br>
+     <input type="text" value="'.$row['FirstName'].'" class="colortext"><br>
      Last Name: <br>
-     <input type="text" name="LastName" value="'.$row['LastName'].'" class="colortext"><br>
+     <input type="text" value="'.$row['LastName'].'" class="colortext"><br>
      Role: <br>
      <input type="text" value="';
      switch($row['Role'])
@@ -89,24 +125,63 @@
          break;
      }
      echo '" readonly><br>
-     <input type="hidden" name="someid" value="'.$row['id'].'">
-     <input type="submit">
-     </form>';
+     <div id="updsend"><input type="button" value="Отправить"></div>
+     </form>
+     <script>
+     updsend.onclick = function(e) {
+       $.post("http://localhost/update_profile_as_user.php",{
+         pwd: document.getElementsByTagName("input")[1].value,
+         FirstName: document.getElementsByTagName("input")[2].value,
+         LastName: document.getElementsByTagName("input")[3].value,
+         someid: '.$row['id'].'
+       } , onAjaxSuccess);
+
+       function onAjaxSuccess(data) {
+        window.location.href="http://localhost/index.php";
+       }
+     }
+     </script>';
+
 
      echo '</div>';
      /*--------------- IMG -----------*/
      echo '<div class="prof_imgupload">';
      if ($row['Photo']=="0") {
-       echo '<img class="img_userphoto" src="img_userphoto/0.png">';
+       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/0.png">';
      } else {
-       echo '<img class="img_userphoto" src="img_userphoto/'.$row['id'].$row['Photo'].'">';
+       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/'.$row['id'].$row['Photo'].'?'.time().'">';
      }
-     echo '<br><br><form action="file-handler.php" method="post" enctype="multipart/form-data">
-        <input type="file" name="upload" accept="image/*">
-        <input type="hidden" name="user_upld_id" value="'.$row['id'].'"><br><br>
-        <input type="submit">
-      </form>';
-     echo '</div>';
+     echo '<br><br>
+        <input id="sortpicture" type="file" name="sortpic" accept="image/*" />
+        <button id="upload">Загрузить</button>';
+     echo '</div>
+
+     <script>
+     $("#upload").on("click", function() {
+    var file_data = $("#sortpicture").prop("files")[0];
+    var form_data = new FormData();
+    form_data.append("file", file_data);
+    form_data.append("user_upd_id","'.$row['id'].'");
+    $.ajax({
+                url: "file-handler.php",
+                dataType: "text",
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: form_data,
+                type: "post",
+                success: function(php_script_response){
+                    document.getElementById("img_ava").src="img_userphoto/'.$row['id'].$row['Photo'].'?"+new Date().getTime();
+                    function updimgrt() {
+                      document.getElementById("img_ava").src="img_userphoto/'.$row['id'].$row['Photo'].'?"+new Date().getTime();
+
+                    }
+                    setTimeout(updimgrt,5000);
+                }
+     });
+});
+
+     </script>';
      /*------------- ENDIMG -----------*/
    }
    else {
@@ -134,6 +209,19 @@
      <br> <a href="index.php">Back</a>';
 
      echo '</div>';
+
+     /*--------------- IMG -----------*/
+     echo '<div class="prof_imgupload">';
+     if ($row['Photo']=="0") {
+       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/0.png">';
+     } else {
+       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/'.$row['id'].$row['Photo'].'?'.time().'">';
+     }
+     echo '<br><br>
+        <input id="sortpicture" type="file" name="sortpic" accept="image/*" />
+        <button id="upload">Загрузить</button>';
+     echo '</div>';
+      /*---------------END IMG -----------*/
    }
 
  }

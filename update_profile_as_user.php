@@ -6,9 +6,5 @@ if ($_POST['pwd']>0) {
 }
 else {
   $res=mysqli_query($conn,'UPDATE users SET FirstName="'.$_POST['FirstName'].'",LastName="'.$_POST['LastName'].'" WHERE id='.$_POST['someid']);
-  //echo "wooo";
 }
-header('Location: index.php');
- //include('DB_conn.php');
- //$res=mysqli_query($conn,'UPDATE users SET users WHERE id='.$_POST['someid']);
 ?>

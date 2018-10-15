@@ -1,4 +1,4 @@
-﻿button {
+﻿.button_bluetext {
   color: blue;
   text-decoration: underline;
   display: block;
@@ -8,6 +8,7 @@
   position: relative;
   height: 0px;
   border: 0px;
+  float: left;
 }
 
 .prof_information {
@@ -27,4 +28,9 @@
 .img_userphoto_intable {
   max-width: 67px;
   max-height: 100px;
+}
+
+.colortext {
+  background-color: #ffe;
+  color: #930;
 }
