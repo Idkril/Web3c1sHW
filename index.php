@@ -11,6 +11,10 @@
   <div class="floatingblocks">
     <a href="audioVideo.php">AUDIO&VIDEO</a>
   </div>
+
+  <div class="floatingblocks">
+    <a href="canvas.php">CANVAS</a>
+  </div>
 </div>
 <?php
 
