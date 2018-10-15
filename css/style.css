@@ -1,0 +1,30 @@
+﻿button {
+  color: blue;
+  text-decoration: underline;
+  display: block;
+  margin: 0;
+  padding: 0;
+  background: none;
+  position: relative;
+  height: 0px;
+  border: 0px;
+}
+
+.prof_information {
+  float: left;
+  padding-right: 50px;
+}
+
+.prof_imgupload {
+  float: left;
+}
+
+.img_userphoto {
+  max-width: 200px;
+  max-height: 300px;
+}
+
+.img_userphoto_intable {
+  max-width: 67px;
+  max-height: 100px;
+}
