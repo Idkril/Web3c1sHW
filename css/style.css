@@ -1,4 +1,5 @@
-﻿.button_bluetext {
+
+.button_bluetext {
   color: blue;
   text-decoration: underline;
   display: block;
@@ -33,4 +34,17 @@
 .colortext {
   background-color: #ffe;
   color: #930;
+}
+
+.floatingblocks {
+  float:left;
+  margin: 20px;
+}
+
+#header {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #DED5DE;
 }

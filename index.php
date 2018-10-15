@@ -2,6 +2,16 @@
 <link href="css/style.css" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
+<div id="header">
+  <div class="floatingblocks">
+    <a href="index.php">USERS</a>
+  </div>
+
+
+  <div class="floatingblocks">
+    <a href="audioVideo.php">AUDIO&VIDEO</a>
+  </div>
+</div>
 <?php
 
 session_start();
