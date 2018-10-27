@@ -1,4 +1,3 @@
-<html>
 <?php
 session_start();
 $_SESSION['login']=$_POST['login'];
@@ -18,4 +17,3 @@ else {
   echo mysqli_error($conn);
 }
 ?>
-</html>

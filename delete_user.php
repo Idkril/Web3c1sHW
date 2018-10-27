@@ -1,4 +1,3 @@
-<html>
 <?php
  include('DB_conn.php');
  $res=mysqli_query($conn,sprintf('DELETE FROM users WHERE id="'.$_POST['someid'].'" '));
@@ -8,4 +7,3 @@ if ($res) {
   echo 'ERROR '.$res;
 }
 ?>
-</html>

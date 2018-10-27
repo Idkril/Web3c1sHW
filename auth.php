@@ -1,4 +1,3 @@
-<html>
 <?php
  session_start();
  if (count($_POST)>0)
@@ -12,12 +11,11 @@
      $_SESSION['login']=$_POST['login'];
      $row=mysqli_fetch_array($res);
      $_SESSION['role']=$row['Role'];
-     echo 'Welcome, '.$_POST['login'];
+     echo $_POST['login'];
    }
    else {
      echo mysqli_error($conn);
-     echo 'Wrong login/password.';
+     echo 1;
    }
  }
 ?>
-</html>
