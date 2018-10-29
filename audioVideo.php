@@ -44,26 +44,6 @@ while ($row = mysqli_fetch_array($res))
   }
 }
 
-/*
-<div class="VideoBlock">
-<iframe width="480" height="360" src="https://www.youtube.com/embed/HbaQ9xnoMGQ" frameborder="0" allowfullscreen></iframe>
-</div>
-
-<div class="VideoBlock">
-<iframe width="480" height="360" src="https://www.youtube.com/embed/HbaQ9xnoMGQ" frameborder="0" allowfullscreen></iframe>
-</div>
-
-<div class="VideoBlock">
-<iframe width="480" height="360" src="https://www.youtube.com/embed/HbaQ9xnoMGQ" frameborder="0" allowfullscreen></iframe>
-</div>
-
-<div class="VideoBlock">
-<video width="480" height="360" controls="controls">
-   <source src="AV/Five Finger Death Punch - Sham Pain (Official Video).mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
-</video>
-</div>
-
-*/
 ?>
 
 </html>

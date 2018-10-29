@@ -217,9 +217,9 @@
      } else {
        echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/'.$row['id'].$row['Photo'].'?'.time().'">';
      }
-     echo '<br><br>
-        <input id="sortpicture" type="file" name="sortpic" accept="image/*" />
-        <button id="upload">Загрузить</button>';
+    // echo '<br><br>
+  //      <input id="sortpicture" type="file" name="sortpic" accept="image/*" />
+    //    <button id="upload">Загрузить</button>';
      echo '</div>';
       /*---------------END IMG -----------*/
    }
