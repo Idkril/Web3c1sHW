@@ -143,6 +143,20 @@ if (!isset($_SESSION['role']))
         document.getElementById("userstable").innerHTML=data;
       }
   }
+
+
+    function deluser(del_user_id) {
+      $.post("http://localhost/delete_user.php",{
+        someid: del_user_id
+      } , onAjaxSuccess);
+
+      function onAjaxSuccess(data) {
+        //alert(data);
+        //location.reload();
+      }
+document.getElementById("ti"+del_user_id).hidden=true;
+    }
+  
 </script>
 
 <button onclick="reverseTable()">ezbutton</button>

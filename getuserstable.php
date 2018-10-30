@@ -119,19 +119,6 @@ switch ($_SESSION['role']) {
     break;
 
   case 2: //ADMIN
-  echo '<script>
-    function deluser(del_user_id) {
-      $.post("http://localhost/delete_user.php",{
-        someid: del_user_id
-      } , onAjaxSuccess);
-
-      function onAjaxSuccess(data) {
-        //alert(data);
-        //location.reload();
-      }
-      document.getElementById("ti"+del_user_id).hidden=true;
-    }
-  </script>';
 
     while ($row = mysqli_fetch_array($res))
     {
