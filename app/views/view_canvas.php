@@ -1,5 +1,4 @@
-<html>
-  <canvas id='example' style="border:2px solid #000000;"></canvas>
+<canvas id='example' style="border:2px solid #000000;"></canvas>
         <script>
             var example = document.getElementById("example"), ctx = example.getContext('2d');
             example.width  = 600;
@@ -125,4 +124,3 @@
       <br>
       Circle: <input type="checkbox" id="pickfigure1" onchange="pickfiguree(1)" checked /> <br>
       Square: <input type="checkbox" id="pickfigure2" onchange="pickfiguree(2)"/> <br>
-</html>

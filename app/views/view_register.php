@@ -1,6 +1,5 @@
 
-<html>
-<form method="POST" action="registration.php">
+<form method="POST" action="register/registration">
   Login:<br>
   <input type="text" name="login"><br>
   Password:<br>
@@ -11,4 +10,3 @@
   <input type="text" name="LastName"><br>
   <input type="submit">
 </form>
-</html>

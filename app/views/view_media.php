@@ -1,11 +1,5 @@
-<html>
-<link href="css/AudVid.css" rel="stylesheet">
-
 <?php
-include('DB_conn.php');
-$res=mysqli_query($conn,"SELECT id,AVName,Type,FilePath FROM audiovideo");
-
-while ($row = mysqli_fetch_array($res))
+while ($row = mysqli_fetch_array($data))
 {
   switch ($row['Type'])
   {
@@ -45,5 +39,3 @@ while ($row = mysqli_fetch_array($res))
 }
 
 ?>
-
-</html>

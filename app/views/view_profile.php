@@ -1,20 +1,9 @@
-<html>
-<link href="css/style.css" rel="stylesheet">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <?php
- session_start();
-
- include('DB_conn.php');
- if (!$_POST['someid'])
- {
-   header('Location: index.php');
- }
- $res=mysqli_query($conn,'SELECT * FROM users WHERE id='.$_POST['someid']);
- if ( mysqli_num_rows($res) > 0)
+if ( mysqli_num_rows($data) > 0)
  {
    //check viewer is the ADMIN and check can/not edit
    echo '<div class="prof_information">';
-   $row=mysqli_fetch_array($res);
+   $row=mysqli_fetch_array($data);
    if ( $_SESSION['role']==2 ) {
      //all editable by admin
      echo '<form>
@@ -46,7 +35,7 @@
 
      <script>
      updsend.onclick = function(e) {
-       $.post("http://localhost/update_profile_as_admin.php",{
+       $.post("http://localhost/profile/update_profile_as_admin",{
          login: document.getElementsByTagName("input")[0].value,
          pwd: document.getElementsByTagName("input")[1].value,
          FirstName: document.getElementsByTagName("input")[2].value,
@@ -56,7 +45,7 @@
        } , onAjaxSuccess);
 
        function onAjaxSuccess(data) {
-        window.location.href="http://localhost/index.php";
+        window.location.href="http://localhost/";
        }
      }
      </script>';
@@ -65,9 +54,9 @@
      /*--------------- IMG -----------*/
      echo '<div class="prof_imgupload">';
      if ($row['Photo']=="0") {
-       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/0.png">';
+       echo '<img class="img_userphoto" id="img_ava" src="assets/img_userphoto/0.png">';
      } else {
-       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/'.$row['id'].$row['Photo'].'?'.time().'">';
+       echo '<img class="img_userphoto" id="img_ava" src="assets/img_userphoto/'.$row['id'].$row['Photo'].'?'.time().'">';
      }
      echo '<br><br>
         <input id="sortpicture" type="file" name="sortpic" accept="image/*" />
@@ -81,7 +70,7 @@
     form_data.append("file", file_data);
     form_data.append("user_upd_id","'.$row['id'].'");
     $.ajax({
-                url: "file-handler.php",
+                url: "/profile/file_handle",
                 dataType: "text",
                 cache: false,
                 contentType: false,
@@ -89,12 +78,8 @@
                 data: form_data,
                 type: "post",
                 success: function(php_script_response){
-                    document.getElementById("img_ava").src="img_userphoto/'.$row['id'].$row['Photo'].'?"+new Date().getTime();
-                    function updimgrt() {
-                      document.getElementById("img_ava").src="img_userphoto/'.$row['id'].$row['Photo'].'?"+new Date().getTime();
+                    document.getElementById("img_ava").src="assets/img_userphoto/'.$row['id'].'"+php_script_response.trim()+"?"+new Date().getTime();
 
-                    }
-                    setTimeout(updimgrt,5000);
                 }
      });
 });
@@ -129,7 +114,7 @@
      </form>
      <script>
      updsend.onclick = function(e) {
-       $.post("http://localhost/update_profile_as_user.php",{
+       $.post("http://localhost/profile/update_profile_as_user",{
          pwd: document.getElementsByTagName("input")[1].value,
          FirstName: document.getElementsByTagName("input")[2].value,
          LastName: document.getElementsByTagName("input")[3].value,
@@ -137,7 +122,7 @@
        } , onAjaxSuccess);
 
        function onAjaxSuccess(data) {
-        window.location.href="http://localhost/index.php";
+        window.location.href="http://localhost/";
        }
      }
      </script>';
@@ -147,9 +132,9 @@
      /*--------------- IMG -----------*/
      echo '<div class="prof_imgupload">';
      if ($row['Photo']=="0") {
-       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/0.png">';
+       echo '<img class="img_userphoto" id="img_ava" src="assets/img_userphoto/0.png">';
      } else {
-       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/'.$row['id'].$row['Photo'].'?'.time().'">';
+       echo '<img class="img_userphoto" id="img_ava" src="assets/img_userphoto/'.$row['id'].$row['Photo'].'?'.time().'">';
      }
      echo '<br><br>
         <input id="sortpicture" type="file" name="sortpic" accept="image/*" />
@@ -163,7 +148,7 @@
     form_data.append("file", file_data);
     form_data.append("user_upd_id","'.$row['id'].'");
     $.ajax({
-                url: "file-handler.php",
+                url: "profile/file_handle",
                 dataType: "text",
                 cache: false,
                 contentType: false,
@@ -171,12 +156,8 @@
                 data: form_data,
                 type: "post",
                 success: function(php_script_response){
-                    document.getElementById("img_ava").src="img_userphoto/'.$row['id'].$row['Photo'].'?"+new Date().getTime();
-                    function updimgrt() {
-                      document.getElementById("img_ava").src="img_userphoto/'.$row['id'].$row['Photo'].'?"+new Date().getTime();
-
-                    }
-                    setTimeout(updimgrt,5000);
+                    document.getElementById("img_ava").src="assets/img_userphoto/'.$row['id'].'"+php_script_response.trim()+"?"+new Date().getTime();
+                    
                 }
      });
 });
@@ -206,16 +187,16 @@
      }
      echo '" readonly><br>
      </form>
-     <br> <a href="index.php">Back</a>';
+     <br> <a href="/main">Back</a>';
 
      echo '</div>';
 
      /*--------------- IMG -----------*/
      echo '<div class="prof_imgupload">';
      if ($row['Photo']=="0") {
-       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/0.png">';
+       echo '<img class="img_userphoto" id="img_ava" src="assets/img_userphoto/0.png">';
      } else {
-       echo '<img class="img_userphoto" id="img_ava" src="img_userphoto/'.$row['id'].$row['Photo'].'?'.time().'">';
+       echo '<img class="img_userphoto" id="img_ava" src="assets/img_userphoto/'.$row['id'].$row['Photo'].'?'.time().'">';
      }
     // echo '<br><br>
   //      <input id="sortpicture" type="file" name="sortpic" accept="image/*" />
@@ -225,5 +206,5 @@
    }
 
  }
-?>
-</html>
+
+ ?>
